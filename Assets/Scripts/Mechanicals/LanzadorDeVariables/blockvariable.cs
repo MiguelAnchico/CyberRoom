@@ -24,8 +24,8 @@ public class blockvariable : MonoBehaviour
         }
     }
 
-    public bool EresTipo(string tipo)
+    public bool EresTipo(int tipo)
     {
-        return tipoDeVariable[tipoVariableEscogido] == tipo;
+        return tipoVariableEscogido == tipo;
     }
 }

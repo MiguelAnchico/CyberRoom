@@ -13,8 +13,11 @@ public class variableable : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Se ha recibido una variable, hay"+cantidadRecibida);
-        cantidadRecibida++;
+        if (other.GetComponent<blockvariable>().EresTipo(tipoDeVariableAceptada))
+        {
+            Debug.Log("Se ha recibido una variable, hay" + cantidadRecibida);
+            cantidadRecibida++;
+        }
     }
     public bool Cantidad()
     {
