@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Lightbug.GrabIt
 {
 
 [System.Serializable]
 public class GrabObjectProperties{
-	
 	public bool m_useGravity = false;
 	public float m_drag = 10;
 	public float m_angularDrag = 10;
@@ -47,8 +47,7 @@ public class GrabIt : MonoBehaviour {
 	[Range(10,50)]
 	float m_impulseMagnitude = 25;
 
-
-	
+	public Text agarrarObjeto;
 
 	[Header("Affected Rigidbody Properties")]
 	[SerializeField] GrabObjectProperties m_grabProperties = new GrabObjectProperties();	
@@ -58,8 +57,8 @@ public class GrabIt : MonoBehaviour {
 	[Header("Layers")]
 	[SerializeField]
 	LayerMask m_collisionMask;
-
-	
+	[SerializeField]
+	LayerMask m_usableMask;
 
 	Rigidbody m_targetRB = null;
 	Transform m_transform;	
@@ -75,8 +74,6 @@ public class GrabIt : MonoBehaviour {
 	//Debug
 	LineRenderer m_lineRenderer;
 
-	
-
 	void Awake()
 	{
 		m_transform = transform;
@@ -85,7 +82,7 @@ public class GrabIt : MonoBehaviour {
 		m_lineRenderer = GetComponent<LineRenderer>();
 	}
 
-	
+
 	void Update()
 	{
 		if( m_grabbing )
@@ -120,13 +117,34 @@ public class GrabIt : MonoBehaviour {
 			if(Input.GetMouseButtonDown(0))
 			{
 				RaycastHit hitInfo;
+				agarrarObjeto.text = "";
 				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ))
 				{
 					Rigidbody rb = hitInfo.collider.GetComponent<Rigidbody>();
-					if(rb != null){							
-						Set( rb , hitInfo.distance);						
+					if(rb != null){
+						Set( rb , hitInfo.distance);
 						m_grabbing = true;
 					}
+				}
+				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_usableMask ))
+				{
+					Destroy(hitInfo.transform.gameObject);
+
+				}
+			} else {
+				RaycastHit hitInfo;
+
+				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ))
+				{
+					agarrarObjeto.text = "MANTEN PRESIONADO\nCLICK DERECHO";
+				}
+				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ))
+				{
+					agarrarObjeto.text = "PRESIONA\nCLICK DERECHO";
+				}
+				if(!Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ) &&
+				!Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_usableMask )){
+					agarrarObjeto.text = "";
 				}
 			}
 		}
