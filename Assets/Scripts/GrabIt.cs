@@ -117,7 +117,7 @@ public class GrabIt : MonoBehaviour {
 			if(Input.GetMouseButtonDown(0))
 			{
 				RaycastHit hitInfo;
-				/*agarrarObjeto.text = "";*/
+				agarrarObjeto.text = "";
 				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ))
 				{
 					Rigidbody rb = hitInfo.collider.GetComponent<Rigidbody>();
@@ -132,7 +132,7 @@ public class GrabIt : MonoBehaviour {
 
 				}
 			} else {
-				/*RaycastHit hitInfo;
+				RaycastHit hitInfo;
 
 				if(Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ))
 				{
@@ -145,7 +145,7 @@ public class GrabIt : MonoBehaviour {
 				if(!Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_collisionMask ) &&
 				!Physics.Raycast(m_transform.position , m_transform.forward , out hitInfo , m_grabMaxDistance , m_usableMask )){
 					agarrarObjeto.text = "";
-				}*/
+				}
 			}
 		}
 		
